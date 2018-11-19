@@ -105,10 +105,10 @@ for(let j = 7; j < 13 ; j+=3){
     for(let i = 0; i < dataTwo.length ; i++){
 
             if(j >= 10){
-                let Annee = {"Années":"20"+ j + "-" + (j+2), "Homicide": dataTwo[i][k], "Pays":dataTwo[i][0]};
+                let Annee = {"Années":`20${j} -${j+2}`, "Homicide": dataTwo[i][k], "Pays":dataTwo[i][0]};
                 DonnesTwo.push(Annee);
             }else{
-                let Annee = {"Années":"200"+j + "-0" + (j+2), "Homicide": dataTwo[i][k], "Pays":dataTwo[i][0]};
+                let Annee = {"Années":`200${j} -0${j+2}`, "Homicide": dataTwo[i][k], "Pays":dataTwo[i][0]};
                 DonnesTwo.push(Annee);
             }
     }
