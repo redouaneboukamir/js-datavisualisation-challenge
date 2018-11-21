@@ -80,6 +80,7 @@ const x = Chart.addCategoryAxis("x","Années");
 const y = Chart.addMeasureAxis("y", "infractions");
 Chart.addSeries("Pays", dimple.plot.line);
 Chart.addLegend(10, 0, 800, 100, "right");
+Chart.setBounds(20, 100, 505, 305);
 Chart.draw();
 
 // table 2
@@ -114,12 +115,53 @@ for(let j = 7; j < 13 ; j+=3){
     }
     k++;
 }
-console.log(DonnesTwo)
 
 let svg2 = dimple.newSvg("#GraphiqueTwo", 590, 400);
 let Chart2 = new dimple.chart(svg2,DonnesTwo);
 const x2 = Chart2.addCategoryAxis("x","Années");
 const y2 = Chart2.addMeasureAxis("y", "Homicide");
 Chart2.addSeries("Pays", dimple.plot.circle);
-Chart2.addLegend(60, 10, 500, 20, "right");
+Chart2.addLegend(60, 10, 800, 200, "right");
+Chart2.setBounds(20, 100, 505, 305);
 Chart2.draw();
+
+// Graphique Ajax 
+const InsertAfterH1 = document.getElementById('firstHeading');
+let GraphAjax = document.createElement("div");
+GraphAjax.setAttribute("class","Graphique");
+GraphAjax.setAttribute("id","GraphiqueAjax");
+InsertAfterH1.appendChild(GraphAjax);
+
+// Recuperation Ajax
+let dataPoints = [];
+let object = {};
+let svgAjax = dimple.newSvg("#GraphiqueAjax", 590, 400);
+let ChartAjax = new dimple.chart(svgAjax,dataPoints);
+ChartAjax.addCategoryAxis("x","x");
+ChartAjax.addMeasureAxis("y", "y");
+ChartAjax.addSeries("Pays", dimple.plot.line);
+ChartAjax.addLegend(60, 10, 800, 200, "right");
+function test(){
+xhr = new XMLHttpRequest;
+xhr.open("GEt", "https://inside.becode.org/api/v1/data/random.json", true);
+
+    xhr.onload = function(){
+
+    object = JSON.parse(this.responseText);
+
+    if(this.status === 200){
+
+        for(let i = 0 ; i < object.length ; i++){
+                dataPoints.push({x: object[i][0], y: object[i][1]})
+        }
+        ChartAjax.draw();
+        setInterval(test ,1000);
+    }
+};
+xhr.send();
+
+};
+test();
+
+
+
